@@ -7,7 +7,7 @@ import time
 import logging
 from datetime import date
 from typing import Optional
-from .config import BASE_URL, SEARCH_ENDPOINT, PAGE_SIZE, MAX_PAGES
+from config import BASE_URL, SEARCH_ENDPOINT, PAGE_SIZE, MAX_PAGES
 
 logger = logging.getLogger(__name__)
 

@@ -8,7 +8,7 @@ import logging
 from datetime import datetime
 import gspread
 from google.oauth2.service_account import Credentials
-from .config import SHEET_NAME_DATA, SHEET_NAME_LOG
+from config import SHEET_NAME_DATA, SHEET_NAME_LOG
 
 logger = logging.getLogger(__name__)
 

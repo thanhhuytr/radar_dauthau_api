@@ -65,7 +65,7 @@ Vào repo GitHub → **Settings → Secrets and variables → Actions → New re
 
 ## BƯỚC 5 — Chỉnh tỉnh theo dõi
 
-Mở file `crawler/config.py`, sửa `PROV_TARGETS`:
+Mở file `config.py`, sửa `PROV_TARGETS`:
 
 ```python
 PROV_TARGETS = [
@@ -116,7 +116,7 @@ export SHEET_ID='your_sheet_id'
 export CLAUDE_API_KEY='sk-ant-...'  # Tùy chọn
 
 pip install -r requirements.txt
-python crawler/main.py
+python main.py
 ```
 
 Hoặc trigger thủ công trên GitHub:

@@ -5,7 +5,7 @@
 import os
 import anthropic
 import logging
-from .config import MIN_VALUE_BILLION, PRIORITY_FIELDS
+from config import MIN_VALUE_BILLION, PRIORITY_FIELDS
 
 logger = logging.getLogger(__name__)
 
