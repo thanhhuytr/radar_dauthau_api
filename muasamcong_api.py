@@ -69,11 +69,17 @@ def fetch_page(
     except requests.exceptions.HTTPError as e:
         logger.warning(f"HTTP {e.response.status_code} khi lấy trang {page} tỉnh {prov_code}")
         return None
-    except requests.exceptions.ConnectionError:
-        logger.error(f"Không kết nối được muasamcong.mpi.gov.vn")
+    except requests.exceptions.SSLError as e:
+        logger.error(f"Lỗi SSL khi kết nối muasamcong (trang {page}, tỉnh {prov_code}): {e}")
+        return None
+    except requests.exceptions.Timeout as e:
+        logger.error(f"Timeout khi kết nối muasamcong (trang {page}, tỉnh {prov_code}): {e}")
+        return None
+    except requests.exceptions.ConnectionError as e:
+        logger.error(f"Không kết nối được muasamcong.mpi.gov.vn (trang {page}, tỉnh {prov_code}): {e}")
         return None
     except Exception as e:
-        logger.error(f"Lỗi không xác định: {e}")
+        logger.error(f"Lỗi không xác định (trang {page}, tỉnh {prov_code}): {type(e).__name__}: {e}")
         return None
 
 
