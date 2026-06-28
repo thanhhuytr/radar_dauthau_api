@@ -5,13 +5,13 @@ import os
 import logging
 import sys
 
-# Thêm thư mục cha vào path để import được config
-sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+# Thêm thư mục hiện tại vào path để import được các module cùng cấp
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from crawler.config import PROV_TARGETS, INVEST_FIELDS
-from crawler.muasamcong_api import fetch_tenders_for_province
-from crawler.sheets_writer import write_tenders, write_log
-from crawler.claude_analyzer import filter_and_analyze
+from config import PROV_TARGETS, INVEST_FIELDS
+from muasamcong_api import fetch_tenders_for_province
+from sheets_writer import write_tenders, write_log
+from claude_analyzer import filter_and_analyze
 
 # ── Logging ──────────────────────────────────────────────────────
 logging.basicConfig(
@@ -89,7 +89,7 @@ def main():
 
 def write_leads(leads: list[dict], sheet_id: str):
     """Ghi leads đã phân tích vào sheet LEADS."""
-    from crawler.sheets_writer import get_sheet_client, ensure_sheet
+    from sheets_writer import get_sheet_client, ensure_sheet
 
     LEADS_HEADERS = [
         "ID", "Tên gói thầu", "Chủ đầu tư", "Tỉnh", "Lĩnh vực",

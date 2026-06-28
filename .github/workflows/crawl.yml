@@ -37,7 +37,7 @@ jobs:
           SHEET_ID: ${{ secrets.SHEET_ID }}
           CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
           PROV_CODES_OVERRIDE: ${{ github.event.inputs.provinces }}
-        run: python crawler/main.py
+        run: python main.py
 
       - name: Ghi log kết quả
         if: always()
