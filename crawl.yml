@@ -1,0 +1,45 @@
+name: Radar Khách Hàng - Crawl Gói Thầu
+
+on:
+  schedule:
+    # Chạy lúc 08:00, 12:00, 17:00 giờ VN (UTC+7 = UTC 01:00, 05:00, 10:00)
+    - cron: '0 1 * * *'   # 08:00 VN
+    - cron: '0 5 * * *'   # 12:00 VN
+    - cron: '0 10 * * *'  # 17:00 VN
+  workflow_dispatch:        # Cho phép chạy thủ công
+    inputs:
+      provinces:
+        description: 'Mã tỉnh cách nhau bởi dấu phẩy (vd: 31,32,33 cho Hải Phòng & vùng lân cận)'
+        required: false
+        default: ''
+
+jobs:
+  crawl-and-push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Cài thư viện
+        run: pip install -r requirements.txt
+
+      - name: Chạy crawler
+        env:
+          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+          CLAUDE_API_KEY: ${{ secrets.CLAUDE_API_KEY }}
+          PROV_CODES_OVERRIDE: ${{ github.event.inputs.provinces }}
+        run: python crawler/main.py
+
+      - name: Ghi log kết quả
+        if: always()
+        run: |
+          echo "✅ Crawl hoàn tất lúc $(TZ='Asia/Ho_Chi_Minh' date '+%d/%m/%Y %H:%M:%S')"
